@@ -9,7 +9,7 @@
   width: 100vw ;
   
 
-  background-image: url('./assets/test.jpg'); 
+  background-image: url('/src/assets/test.jpg'); 
   background-size: cover;   
   background-repeat: repeat; 
   background-position: center; 
@@ -43,4 +43,10 @@
   width : 50%;
   background-color: gray;
   border-radius: 10px;
+}
+
+.Login-button {
+  background-color: blue;
+  width : 60%;
+  height : 20%;
 }
