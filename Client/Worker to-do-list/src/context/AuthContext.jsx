@@ -10,8 +10,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const [account_type, setAccountType] = useState("");
 
-  // Fake login/logout just for testing
-  const login = (type) => setAccountType(type); // <-- unified login function
+  // Generic login
+  const login = (type) => setAccountType(type); // "admin" or "user"
   const logout = () => setAccountType(null);
 
   return (
