@@ -1,0 +1,4 @@
+.mainframe {
+    display : flex;   
+    flex-direction: column;
+}

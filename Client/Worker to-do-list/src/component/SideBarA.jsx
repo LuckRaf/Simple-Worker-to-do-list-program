@@ -8,10 +8,11 @@ function SideBarA({ profilePic, username }) {
     const navigate = useNavigate();
     const location = useLocation();
     const menuItems = [ 
-    { path: '/home', icon: check, label: 'Home' },
-    { path: '/taskL', icon: check, label: 'Task List' },
-    { path: '/activity', icon: check, label: 'Activity' },
-    { path: '/productivity', icon: check, label: 'Productivity' },
+    { path: '/mainAdmin', icon: check, label: 'Home' },
+    { path: '/taskListA', icon: check, label: 'Task List' },
+    { path: '/Activity', icon: check, label: 'Activity' },
+    { path: '/Productivity', icon: check, label: 'Productivity' },
+    { path: '/logout', icon: check, label: 'Log Out' },
     ];
 
     const isActive = (path) => location.pathname === path;
