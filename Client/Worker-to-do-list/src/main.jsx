@@ -10,7 +10,7 @@ import MainAdmin from './Pages/MainAdmin.jsx'
 import MainUser from './Pages/MainUser.jsx'
 import Activity from './Pages/Activity.jsx'
 import Productivity from './Pages/Productivity.jsx'
-
+import TaskA from './Pages/TaskListA.jsx';
 
 
 import { AuthProvider } from './context/AuthContext.jsx'
