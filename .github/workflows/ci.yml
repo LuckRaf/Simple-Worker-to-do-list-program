@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-run:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +22,6 @@ jobs:
         working-directory: Client/Worker-to-do-list
         run: npm install
 
-      - name: Run dev server
+      - name: Build Vite project
         working-directory: Client/Worker-to-do-list
-        run: npm run dev
+        run: npm run build
