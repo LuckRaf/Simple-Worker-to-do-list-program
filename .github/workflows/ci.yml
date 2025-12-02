@@ -1,6 +1,5 @@
 name: Node.js CI for Worker To-Do List
 
-# Trigger workflow pada push atau pull request ke main
 on:
   push:
     branches: [ main ]
@@ -12,26 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
       - uses: actions/checkout@v3
 
-      # 2. Setup Node.js versi 18
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20.19'
 
-      # 3. Install dependencies di subfolder Worker-to-do-list
       - name: Install dependencies
         working-directory: Client/Worker-to-do-list
         run: npm install
 
-      # 4. Jalankan dev script di subfolder
       - name: Run dev server
         working-directory: Client/Worker-to-do-list
         run: npm run dev
-
-      # 5. Opsional: tampilkan list file
-      - name: List files
-        working-directory: Client/Worker-to-do-list
-        run: ls -al
