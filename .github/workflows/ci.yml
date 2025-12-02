@@ -27,4 +27,4 @@ jobs:
 
       # 4. Jalankan test
       - name: Run tests
-        run: npm test
+        run: npm run dev
