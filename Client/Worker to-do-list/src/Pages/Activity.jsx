@@ -9,8 +9,8 @@ function Activity() {
 
   return (
     
-    <div className="MainFrame">
-      <Sidebar profilePic={pfp} />
+    <div className="Activity">
+      <Sidebar profilePic={pfp} username={'Admin'}/>
     
     </div>
   )

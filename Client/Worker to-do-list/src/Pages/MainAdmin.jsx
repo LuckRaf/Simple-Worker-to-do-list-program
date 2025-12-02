@@ -10,7 +10,7 @@ function MainAdmin() {
   return (
     
     <div className="AdminHome">
-      <Sidebar profilePic={pfp} username={"page test"}/>
+      <Sidebar profilePic={pfp} username={"Admin"}/>
       <div classname="HomeA">
         
       </div>

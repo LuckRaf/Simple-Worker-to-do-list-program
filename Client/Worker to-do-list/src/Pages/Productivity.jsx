@@ -9,8 +9,8 @@ function Productivity() {
 
   return (
     
-    <div className="MainFrame">
-      <Sidebar profilePic={pfp} />
+    <div className="Productivity">
+      <Sidebar profilePic={pfp} username={'Admin'}/>
     
     </div>
   )

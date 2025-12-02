@@ -1,12 +1,8 @@
 .sidebar {
-  width: 19%;
   background-color: #101011;
-  padding: 1rem;
-  border-right: 2px solid #232323;
-  height: 100%;
+  height: 150%;
   width: 15%;
   align-self: left;
-  margin-right: auto;
 }
 
 /* Profile section in sidebar */
