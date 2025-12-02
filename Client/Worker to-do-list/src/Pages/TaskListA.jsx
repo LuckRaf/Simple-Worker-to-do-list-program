@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Productivity.css'
+import './TaskListA.css'
 import pfp from '/src/assets/PageRoutingTest.png';
 import Sidebar from "../component/SideBarA.jsx";
 
@@ -9,9 +9,12 @@ function TaskA() {
 
   return (
     
-    <div className="MainFrame">
+    <div className="TaskContainer">
       <Sidebar profilePic={pfp} />
-    
+      <div className="TaskContainerKanban"> 
+
+
+      </div>
     </div>
   )
 }

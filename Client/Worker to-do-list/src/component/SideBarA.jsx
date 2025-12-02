@@ -21,7 +21,7 @@ function SideBarA({ profilePic, username }) {
         <aside className="sidebar">
         {/* Profile Section */}
         <div className="sidebar-section">
-            <h1>PIXMON</h1>
+            <h1>MANAGEMENT</h1>
             <img 
                 src={profilePic || '/PageRoutingTest.png'} 
                 alt={username || 'Profile'} 

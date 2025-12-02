@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Login.css'
+import './MainAdmin.css'
 import pfp from '/src/assets/PageRoutingTest.png';
 import Sidebar from "../component/SideBarA.jsx";
 
@@ -9,8 +9,11 @@ function MainAdmin() {
 
   return (
     
-    <div className="MainFrame">
+    <div className="AdminHome">
       <Sidebar profilePic={pfp} username={"page test"}/>
+      <div classname="HomeA">
+        
+      </div>
   
     </div>
   )

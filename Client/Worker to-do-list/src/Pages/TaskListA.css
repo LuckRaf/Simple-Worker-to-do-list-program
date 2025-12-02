@@ -1,4 +1,15 @@
-.mainframe {
+.TaskContainer {
     display : flex;   
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+}
+
+.TaskContainerKanban {
+    display:flex;
     flex-direction: column;
+    padding: 20px;
+    width: 70%;
+    height: 30%;
+    background-color: aqua;
 }

@@ -4,6 +4,7 @@
   padding: 1rem;
   border-right: 2px solid #232323;
   height: 100%;
+  width: 15%;
   align-self: left;
   margin-right: auto;
 }
@@ -16,7 +17,7 @@
 
 /* Title styling in profile section */
 .sidebar-section h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
   letter-spacing: 3px;
 }
