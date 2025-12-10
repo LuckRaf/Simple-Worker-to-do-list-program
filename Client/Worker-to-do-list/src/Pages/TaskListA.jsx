@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './TaskListA.css';
-import pfp from '/src/assets/PageRoutingTest.png';
+import pfp from '/src/assets/checkmark.png';
 import Sidebar from "../component/SideBarA.jsx";
 
 function TaskA() {
@@ -33,7 +33,11 @@ function TaskA() {
       <div className="AllTaskContainer"> 
 
         {/* Kanban title */}
-        <h2 className="SectionTitle">Work Status</h2>
+    
+        <div className="WelcomeBox-Work">
+          Work Status
+        </div>
+        
         <div className='KanbanModel'>
           {["UNATTENDED", "ATTENDED", "ON REVIEW", "DONE"].map((status, i) => (
             <div key={i} className='Tasksection'>

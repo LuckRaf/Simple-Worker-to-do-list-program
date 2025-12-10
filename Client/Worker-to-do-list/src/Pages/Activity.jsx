@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './Activity.css'
-import pfp from '/src/assets/PageRoutingTest.png';
+import pfp from '/src/assets/checkmark.png';
 import Sidebar from "../component/SideBarA.jsx";
 
 

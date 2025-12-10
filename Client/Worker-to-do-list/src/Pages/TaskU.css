@@ -1,5 +1,5 @@
 /* WHOLE PAGE */
-.TaskContainer {
+.UserTaskContainer {
     display: flex;
     width: 100vw;
     height: 100vh;
@@ -8,7 +8,7 @@
 }
 
 /* RIGHT CONTENT */
-.AllTaskContainer {
+.UserAllTaskContainer {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -19,8 +19,7 @@
 }
 
 /* PRETTY TITLE BOX */
-
-.WelcomeBox-Work {
+.UserWelcomeBox-Work {
     color:black;
     background-color: white;      
     padding: 20px;              
@@ -31,8 +30,9 @@
     margin-bottom: 20px;         
     width: fit-content;          
 }
+
 /* KANBAN BOARD */
-.KanbanModel {
+.UserKanbanModel {
     color : black;
     display: flex;
     width: 90%;
@@ -43,7 +43,7 @@
 }
 
 /* KANBAN COLUMNS */
-.Tasksection {
+.UserTaskSection {
     display: flex;
     flex-direction: column;
     width: 23%;
@@ -55,7 +55,7 @@
 }
 
 /* COLUMN LABEL */
-.TaskStatus {
+.UserTaskStatus {
     background-color: #5a7be0;
     color: white;
     width: 100%;
@@ -68,7 +68,7 @@
 }
 
 /* TASK LIST SCROLL */
-.TaskList {
+.UserTaskList {
     flex: 1;
     width: 100%;
     overflow-y: auto;
@@ -77,7 +77,7 @@
 }
 
 /* TASK CARD */
-.TaskItem {
+.UserTaskItem {
     align-items: center;
     background-color: white;
     padding: 0.7rem;
@@ -88,54 +88,23 @@
     transition: 0.2s ease;
 }
 
-.TaskItem:hover {
+.UserTaskItem:hover {
     background-color: #e8efff;
 }
 
 /* TASK TEXT */
-.TaskTitle {
+.UserTaskTitle {
     font-weight: bold;
     margin-bottom: 3px;
 }
 
-.TaskDependencies {
+.UserTaskDependencies {
     font-size: 0.85rem;
     color: #444;
 }
 
-/* LOG TABLE SECTION */
-.LogTable {
-    width: 95%;
-    height: 30%;
-    background-color: white;
-    margin-top: 1%;
-    overflow: auto;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-}
-
-/* TABLE STYLE */
-.LogTable table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.LogTable th,
-.LogTable td {
-    border: 1px solid #999;
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-.LogTable th {
-    background-color: #f7f7f7;
-    font-weight: bold;
-}
-
 /* POPUP OVERLAY */
-.Overlay {
+.UserOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -149,7 +118,7 @@
 }
 
 /* POPUP BOX */
-.OverlayContent {
+.UserOverlayContent {
     background-color: white;
     padding: 2rem;
     border-radius: 12px;
@@ -158,8 +127,8 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.OverlayContent h3,
-.OverlayContent p,
-.OverlayContent li {
+.UserOverlayContent h3,
+.UserOverlayContent p,
+.UserOverlayContent li {
     color: black;
 }

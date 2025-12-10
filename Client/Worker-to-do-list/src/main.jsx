@@ -11,7 +11,9 @@ import MainUser from './Pages/MainUser.jsx'
 import Activity from './Pages/Activity.jsx'
 import Productivity from './Pages/Productivity.jsx'
 import TaskA from './Pages/TaskListA.jsx';
-
+import TaskU from './Pages/TaskU.jsx';
+import ProfileU from './Pages/ProfileUser.jsx';
+import NotificationU from './Pages/NotificationU.jsx';
 
 import { AuthProvider } from './context/AuthContext.jsx'
 import ProtectedRoute from './context/ProtectedRoute.jsx'
@@ -68,6 +70,30 @@ createRoot(document.getElementById('root')).render(
             element={
               <ProtectedRoute allowed={["user", "admin"]}>
                 <Login />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/TaskListU" 
+            element={
+              <ProtectedRoute allowed={["user"]}>
+                <TaskU />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/ProfileU" 
+            element={
+              <ProtectedRoute allowed={["user"]}>
+                <ProfileU />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/NotificationU" 
+            element={
+              <ProtectedRoute allowed={["user"]}>
+                <NotificationU />
               </ProtectedRoute>
             } 
           />
