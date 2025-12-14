@@ -8,8 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Node modules
-node_modules/
-Client/Worker-to-do-list/node_modules/
+node_modules
+Client/Worker-to-do-list/node_modules
 
 # Build output
 dist
