@@ -1,13 +1,10 @@
-
 .MainFrame {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  align-content: center;
   height: 100vh;
-  width: 100vw ;
-  
+  width: 100vw;
 
   background-image: url('/src/assets/image.png'); 
   background-size: cover;   
@@ -15,40 +12,117 @@
   background-position: center; 
 }
 
+/* 🔹 BOX DIBESARKAN */
 .Login-box {
   display: flex;
   flex-direction: column;
   align-items: center;
 
   text-align: center;
-  width: 25wh;
-  height: 40vh;
-  justify-self: center;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  font-size: 200%;
+  width: 20vw;     
+  height: auto;
+  
+  padding: 25px;
+
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  font-size: 1.6rem;
+
+  overflow: auto;
 }
 
-.Login-box input{
-  font-size: 100%;
-  border-radius: 10px;
-  width : 60%;
-}
+.register-box {
+    display: flex;
+  flex-direction: column;
+  align-items: center;
 
-.Login-title {
   text-align: center;
-  justify-content: center;
+  width: 20vw;     
+  height: 40vh;       
+  
+  padding: 25px;
+
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  font-size: 1.6rem;
+
+}
+
+/* 🔹 INPUT LEBIH PROPORSIONAL */
+.Login-box input {
+  font-size: 1rem;
+  border-radius: 10px;
+  width: 75%;
+  padding: 8px 10px;
+}
+
+/* 🔹 TITLE */
+.Login-title {
   display: flex;
-  width : 50%;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  padding: 6px 0;
+
   background-color: gray;
   border-radius: 10px;
+  font-size: 1.3rem;
 }
 
+/* 🔹 TOMBOL LOGIN */
 .Login-button {
   background-color: blue;
-  width : 40%;
-  height : 20%;
-  text-justify: center;
-  font-size: 20px;
+  color: white;
+
+  width: 120px;              /* fixed biar konsisten */
+  height: 42px;
+
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Login-button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* 🔹 AREA TOMBOL */
+.Login-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+/* 🔹 LINK REGISTER */
+.Register-link {
+  background: transparent;
+  border: none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.Register-link:hover {
+  text-decoration: underline;
+}
+
+/* 🔹 OVERLAY ANIM */
+.Register-overlay {
+  width: 100%;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
