@@ -1,7 +1,9 @@
 import React from 'react';
 import './ProfileUser.css';
 import pfp from '/src/assets/checkmark.png';
-import Sidebar from "../component/SideBarW.jsx";
+
+import SidebarA from "../component/SideBarA.jsx";
+import SidebarU from "../component/SideBarW.jsx";
 
 function ProfileUser() {
   const user = {
@@ -19,7 +21,7 @@ function ProfileUser() {
 
   return (
     <div className="UserProfileContainer">
-      <Sidebar profilePic={pfp} username="test" />
+      <SidebarU profilePic={pfp} username="test" />
 
       <div className="UserProfileContent">
         {/* Nama & Data Singkat */}

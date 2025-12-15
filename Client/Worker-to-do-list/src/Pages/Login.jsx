@@ -34,7 +34,7 @@ function Login() {
 
     if (res.ok && data.success) {
       // ✅ Simpan role & user_id di AuthContext
-      login(data.role, data.id);
+      login(data.role, data.id, data.username);
 
       // Redirect sesuai role
       if (data.role === "admin") navigate("/MainAdmin");

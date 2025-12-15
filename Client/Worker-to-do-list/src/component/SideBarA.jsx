@@ -10,8 +10,9 @@ function SideBarA({ profilePic, username }) {
     const menuItems = [ 
     { path: '/mainAdmin', icon: check, label: 'Home' },
     { path: '/taskListA', icon: check, label: 'Task List' },
-    { path: '/Activity', icon: check, label: 'Activity' },
+    { path: '/ProfileU', icon: check, label: 'Profile' },
     { path: '/Productivity', icon: check, label: 'Productivity' },
+    { path: '/Group', icon: check, label: 'Group' },
     { path: '/logout', icon: check, label: 'Log Out' },
     ];
 

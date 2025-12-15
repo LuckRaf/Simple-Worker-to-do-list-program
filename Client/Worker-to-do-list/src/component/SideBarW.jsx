@@ -12,6 +12,7 @@ function SideBarA({ profilePic, username }) {
     { path: '/ProfileU', icon: check, label: 'Profile' },
     { path: '/NotificationU', icon: check, label: 'Notification' },
     { path: '/taskListU', icon: check, label: 'Task List' },
+    { path: '/Group', icon: check, label: 'Group' },
     { path: '/logout', icon: check, label: 'Log Out' },
     ];
 

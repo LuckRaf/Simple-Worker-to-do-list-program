@@ -1,165 +1,202 @@
 /* WHOLE PAGE */
 .TaskContainer {
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-    gap: 1.5rem;
-    overflow: hidden;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  gap: 1.5rem;
+  overflow: hidden;
 }
 
 /* RIGHT CONTENT */
 .AllTaskContainer {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    height: 100%;
-    overflow-y: auto;
-    align-items: center;
-    padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 100%;
+  overflow-y: auto;
+  align-items: center;
+  padding-top: 1rem;
 }
 
-/* PRETTY TITLE BOX */
-
+/* TITLE BOX */
 .WelcomeBox-Work {
-    color:black;
-    background-color: white;      
-    padding: 20px;              
-    border-radius: 12px;          
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-    font-size: 24px;             
-    font-weight: bold;
-    margin-bottom: 20px;         
-    width: fit-content;          
+  color: black;
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
-/* KANBAN BOARD */
+
+/* ADD TASK BUTTON */
+.AddTaskButton {
+  padding: 10px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.AddTaskButton:hover {
+  background-color: #43a047;
+}
+
+/* KANBAN */
 .KanbanModel {
-    color : black;
-    display: flex;
-    width: 90%;
-    height: 60%;
-    gap: 1rem;
-    padding: 0.5rem;
-    justify-content: space-between;
+  display: flex;
+  width: 90%;
+  height: 60%;
+  gap: 1rem;
 }
 
-/* KANBAN COLUMNS */
+/* COLUMN */
 .Tasksection {
-    display: flex;
-    flex-direction: column;
-    width: 23%;
-    height: 100%;
-    background-color: #f0f4ff;
-    padding: 0.8rem;
-    border-radius: 10px;
-    border: 1px solid #c5d4ff;
+  display: flex;
+  flex-direction: column;
+  width: 23%;
+  background-color: #f0f4ff;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid #c5d4ff;
 }
 
-/* COLUMN LABEL */
+/* COLUMN HEADER */
 .TaskStatus {
-    background-color: #5a7be0;
-    color: white;
-    width: 100%;
-    padding: 0.4rem;
-    text-align: center;
-    font-weight: bold;
-    border-radius: 6px;
-    margin-bottom: 0.6rem;
-    align-self: center;
+  background-color: #5a7be0;
+  color: white;
+  padding: 0.4rem;
+  text-align: center;
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+  font-weight: bold;
 }
 
-/* TASK LIST SCROLL */
+/* TASK LIST */
 .TaskList {
-    flex: 1;
-    width: 100%;
-    overflow-y: auto;
-    border-radius: 6px;
-    padding-right: 4px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 /* TASK CARD */
 .TaskItem {
-    align-items: center;
-    background-color: white;
-    padding: 0.7rem;
-    margin-bottom: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #d5ddf7;
-    cursor: pointer;
-    transition: 0.2s ease;
+  background-color: white;
+  padding: 0.7rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #d5ddf7;
+  cursor: pointer;
+  color:black;
 }
 
 .TaskItem:hover {
-    background-color: #e8efff;
+  background-color: #e8efff;
 }
 
-/* TASK TEXT */
 .TaskTitle {
-    font-weight: bold;
-    margin-bottom: 3px;
+  font-weight: bold;
 }
 
 .TaskDependencies {
+    color :black;
     font-size: 0.85rem;
-    color: #444;
 }
 
-/* LOG TABLE SECTION */
+/* LOG TABLE */
 .LogTable {
-    width: 95%;
-    height: 30%;
-    background-color: white;
-    margin-top: 1%;
-    overflow: auto;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 0.5rem;
+  width: 95%;
+  background: white;
+  margin-top: 1rem;
+  border-radius: 10px;
+  overflow: auto;
+  color:black;
 }
 
-/* TABLE STYLE */
 .LogTable table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .LogTable th,
 .LogTable td {
-    border: 1px solid #999;
-    padding: 0.5rem;
-    text-align: center;
-    font-size: 0.9rem;
+  border: 1px solid #999;
+  padding: 0.5rem;
+  text-align: center;
 }
 
-.LogTable th {
-    background-color: #f7f7f7;
-    font-weight: bold;
-}
-
-/* POPUP OVERLAY */
+/* OVERLAY */
 .Overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-/* POPUP BOX */
 .OverlayContent {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    width: 320px;
-    max-width: 90%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 320px;
+  color: black;
 }
 
-.OverlayContent h3,
-.OverlayContent p,
-.OverlayContent li {
-    color: black;
+.OverlayContent input,
+.OverlayContent textarea {
+  width: 100%;
+  margin-top: 8px;
+  padding: 6px;
 }
+
+.OverlayActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.DependencyItem {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+
+    gap: 12px;
+
+    background-color: #ffffff;
+    color: #111;
+
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-top: 8px;
+
+    border: 1px solid #d0d4dc;
+    font-size: 14px;
+
+    text-align: left !important;
+}
+
+.DependencyItem input[type="checkbox"] {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.DependencyItem span {
+    flex: 0;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* netralisasi css global yang bikin kebalik */
+.AddTaskOverlay label {
+    justify-content: initial;
+    text-align: left;
+}
+

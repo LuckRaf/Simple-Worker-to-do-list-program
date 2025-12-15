@@ -6,6 +6,7 @@ import "./MainAdmin.css";
 
 function MainAdmin() {
   const { user_id } = useAuth(); // Ambil user_id dari context
+  const { username } = useAuth();
 
   const [workData, setWorkData] = useState({
     Attended: 9999,
@@ -45,7 +46,7 @@ function MainAdmin() {
 
   return (
     <div className="AdminHome">
-      <Sidebar profilePic={pfp} username={`Admin (${user_id})`} />
+      <Sidebar profilePic={pfp} username={username} />
 
       <div className="HomeA">
         <div className="WelcomeBox">

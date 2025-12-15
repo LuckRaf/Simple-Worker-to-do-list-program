@@ -60,6 +60,38 @@ class Account {
     return rows[0]; // akan mengembalikan object { id, username, role, ... }
   }
 
+  // model/Account.js
+  static async getGroupMembers(user_id) {
+    // Ambil workcode user
+    const workcodeSql = `SELECT workcode FROM Account WHERE id = ?`;
+    const [rows] = await db.execute(workcodeSql, [user_id]);
+
+    if (rows.length === 0) return [];
+
+    const workcode = rows[0].workcode;
+
+    // Ambil semua akun dengan workcode sama
+    const membersSql = `
+      SELECT id, username, full_name, role
+      FROM Account
+      WHERE workcode = ?
+    `;
+
+    const [members] = await db.execute(membersSql, [workcode]);
+    return members;
+  }
+
+
+  static async getRole (user_id) {
+    const sql = `SELECT role FROM Account WHERE id = ?`;
+    const [rows] = await db.execute(sql, [user_id]);
+    if (rows.length === 0) return null;
+
+    return rows[0].role; // mengembalikan 'user' atau 'admin'
+  }
+
+  static async
+
 }
 
 module.exports = Account
