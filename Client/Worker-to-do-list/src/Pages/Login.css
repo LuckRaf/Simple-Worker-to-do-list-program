@@ -126,3 +126,21 @@
     transform: translateY(0);
   }
 }
+.Workcode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.Workcode button {
+  height: 5vh;
+  width: 20vh;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  justify-items: center;
+  align-items: center;
+}
+
+

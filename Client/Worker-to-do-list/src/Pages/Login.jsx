@@ -4,11 +4,9 @@ import { useAuth } from "../context/AuthContext"
 import './Login.css'
 
 function Login() {
-  // LOGIN STATE
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
-  // REGISTER STATE
   const [showRegister, setShowRegister] = useState(false)
   const [regData, setRegData] = useState({
     username: "",
@@ -16,33 +14,67 @@ function Login() {
     email: "",
     full_name: "",
     phone_number: "",
-    role: "user"
+    role: "user",
+    workcode: ""
   })
 
   const navigate = useNavigate()
   const { login } = useAuth()
 
-  /* ================= LOGIN ================= */
-  const handleLogin = () => {
-    if (username === "admin") {
-      login(username)
-      navigate("/MainAdmin")
-    } else if (username === "user") {
-      login(username)
-      navigate("/MainUser")
+  // ========== LOGIN ==========
+  const handleLogin = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      // ✅ Simpan role & user_id di AuthContext
+      login(data.role, data.id);
+
+      // Redirect sesuai role
+      if (data.role === "admin") navigate("/MainAdmin");
+      else navigate("/MainUser");
     } else {
-      alert("Invalid username!")
+      alert(data.message || "Login failed");
     }
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+};
+
+
+  // ========== REGISTER ==========
+  const generateRandomCode = (length = 10) => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()"
+    let code = ""
+    for (let i = 0; i < length; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length))
+    }
+    return code
   }
 
-  /* ================= REGISTER ================= */
+  const handleGenerateCode = () => {
+    const code = generateRandomCode()
+    setRegData({ ...regData, workcode: code })
+  }
+
   const handleRegister = async () => {
     try {
+      // Jika user, workcode wajib
+      if (regData.role === "user" && !regData.workcode) {
+        alert("Please enter work code provided by your administrator")
+        return
+      }
+
       const res = await fetch("http://localhost:3000/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(regData)
       })
 
@@ -55,17 +87,15 @@ function Login() {
 
       alert("Register success!")
       setShowRegister(false)
-
-      // reset form
       setRegData({
         username: "",
         password: "",
         email: "",
         full_name: "",
         phone_number: "",
-        role: "user"
+        role: "user",
+        workcode: ""
       })
-
     } catch (error) {
       alert("Server error")
       console.error(error)
@@ -82,7 +112,6 @@ function Login() {
 
         <br />
 
-        {/* ================= LOGIN FORM ================= */}
         {!showRegister && (
           <>
             <input
@@ -116,7 +145,6 @@ function Login() {
           </>
         )}
 
-        {/* ================= REGISTER FORM ================= */}
         {showRegister && (
           <div className="Register-overlay">
 
@@ -159,11 +187,34 @@ function Login() {
 
             <select
               value={regData.role}
-              onChange={e => setRegData({ ...regData, role: e.target.value })}
+              onChange={e => setRegData({ ...regData, role: e.target.value, workcode: "" })}
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
+            <br />
+
+            <div className='Workcode'>
+              {regData.role === "user" ? (
+                <input
+                  placeholder="Work Code from Admin"
+                  value={regData.workcode}
+                  onChange={e => setRegData({ ...regData, workcode: e.target.value })}
+                />
+              ) : (
+                <>
+                  <input
+                    placeholder="Generated Work Code"
+                    value={regData.workcode}
+                    readOnly
+                  />
+                  <br />
+                  <button type="button" onClick={handleGenerateCode}>
+                    Generate
+                  </button>
+                </>
+              )}
+            </div>
             <br />
 
             <div className="Login-actions">

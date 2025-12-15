@@ -1,5 +1,4 @@
 const db = require('../config/database')
-const bcrypt = require('bcrypt')
 
 class Account {
 
@@ -13,42 +12,54 @@ class Account {
         full_name VARCHAR(100) NOT NULL,
         phone_number VARCHAR(20),
         role ENUM('user','admin') DEFAULT 'user',
+        workcode VARCHAR(20),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `
+
+    const sql2 = ` 
+      CREATE TABLE IF NOT EXISTS AccountData (
+        account_id INT PRIMARY KEY,
+        Attended INT DEFAULT 0,
+        OnReview INT DEFAULT 0,
+        Completed INT DEFAULT 0,
+        FOREIGN KEY (account_id) REFERENCES Account(id)
+      )
+    `
     await db.execute(sql)
+    await db.execute(sql2)
     console.log('Account table initialized')
   }
 
-  static async AccountRegister(
-    username,
-    password,
-    email,
-    full_name,
-    phone_number,
-    role
-  ) {
-    // 🔐 HASH PASSWORD
-    const saltRounds = 10
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
-
+  static async AccountRegister(username, password, email, full_name, phone_number, role, workcode) {
     const sql = `
-      INSERT INTO Account 
-      (username, password, email, full_name, phone_number, role)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO Account
+      (username, password, email, full_name, phone_number, role, workcode)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     `
 
     const [result] = await db.execute(sql, [
-      username,
-      hashedPassword,
-      email,
-      full_name,
-      phone_number,
-      role
+      username, password, email, full_name, phone_number, role, workcode
     ])
 
+    const sql2 = ` 
+      INSERT INTO AccountData
+      (account_id, Attended, OnReview, Completed)
+      VALUES (LAST_INSERT_ID(), 0, 0, 0)
+    `
+    await db.execute(sql2)
     return result
   }
+
+  static async login(username, password) {
+    const sql = `SELECT * FROM Account WHERE username = ? AND password = ?`;
+    const [rows] = await db.execute(sql, [username, password]);
+
+    if (rows.length === 0) return null;
+
+    return rows[0]; // akan mengembalikan object { id, username, role, ... }
+  }
+
 }
 
 module.exports = Account
