@@ -9,6 +9,8 @@ const Task = require('./model/Task');
 const UserController = require('./controller/UserController');
 const app = express();
 const User = require('./model/User');
+const NotificationController = require('./controller/NotificationController');
+const Notification = require('./model/Notification');
 
 app.use(cors({
   origin: '*',
@@ -75,6 +77,28 @@ app.get('/group/:user_id', accountController.getGroupMembers);
 app.get('/user/work-data/:user_id', UserController.getUserWorkData);
 
 
+// ======= NOTIFICATION ROUTES =======
+// Dapatkan daftar semua worker (untuk admin memilih target)
+app.get("/notification/workers/:user_id", async (req, res) => {
+  try {
+    const { user_id } = req.params;
+    const workers = await Notification.getWorkers(user_id);
+    res.json(workers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// Buat notifikasi baru (admin bisa pilih user tertentu atau semua worker)
+app.post("/notification/admin", NotificationController.createNotification);
+
+// Dapatkan notifikasi admin sendiri
+app.get("/notification/admin/:user_id", NotificationController.getAdminNotifications);
+
+
+app.get('/notification/user/:user_id', NotificationController.getAllNotif);
+
 
 app.get('/user/completed-work/:user_id', async (req, res) => {
   try {
@@ -102,4 +126,5 @@ app.listen(PORT, async () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
   await Account.initAccountTable();
   await Task.initTaskTable();
+  await Notification.initNotificationTable();
 });

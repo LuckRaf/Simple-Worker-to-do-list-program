@@ -11,7 +11,8 @@ function SideBarA({ profilePic, username }) {
     { path: '/mainAdmin', icon: check, label: 'Home' },
     { path: '/taskListA', icon: check, label: 'Task List' },
     { path: '/ProfileU', icon: check, label: 'Profile' },
-    { path: '/Productivity', icon: check, label: 'Productivity' },
+    { path: '/NotificationA', icon: check, label: 'Notification' },
+    // { path: '/Productivity', icon: check, label: 'Productivity' },
     { path: '/Group', icon: check, label: 'Group' },
     { path: '/logout', icon: check, label: 'Log Out' },
     ];

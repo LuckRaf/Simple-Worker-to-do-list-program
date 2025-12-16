@@ -1,85 +1,82 @@
-.UserNotifContainer {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
+.NotifUserContainer { display:flex; width:100vw; height:100vh; }
+
+.NotifUserContent {
+  flex:1;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  overflow-y:auto;
+  color:white;
 }
 
-.UserNotifContent {
-  flex: 1;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.NotifUserTitle { font-size:26px; font-weight:bold; }
 
-  overflow-y: auto;
+.NotifUserBtn {
+  padding:10px 20px;
+  font-size:14px;
+  background-color:#4c9aff;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.UserNotifTitle {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: white ;
-  
+.NotifUserEmpty { margin-top:20px; font-size:16px; color:#ccc; }
+
+.NotifUserList {
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-.UserNotifList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.NotifUserItem {
+  display:flex;
+  align-items:center;
+  background-color:#2c2c3e;
+  padding:15px 20px;
+  border-radius:12px;
+  gap:15px;
 }
 
-.UserNotifItem {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  padding: 15px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  gap: 15px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
+.NotifUserIcon { font-size:24px; }
+
+.NotifUserMessage {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
 }
 
-.UserNotifItem:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+.NotifUserItemTitle { font-weight:600; font-size:16px; }
+
+.NotifUserTime { font-size:12px; color:#aaa; }
+
+/* Overlay */
+.NotifUserOverlay {
+  position:fixed;
+  inset:0;
+  background-color:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.UserNotifIcon {
-  font-size: 24px;
+.NotifUserOverlayContent {
+  background-color:#fff;
+  padding:30px;
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  width:400px;
 }
 
-.UserNotifText {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.UserNotifItemTitle {
-  font-weight: 600;
-  font-size: 16px;
-  color: #333;
-}
-
-.UserNotifItemMessage {
-  font-size: 14px;
-  color: #555;
-}
-
-.UserNotifTime {
-  font-size: 12px;
-  color: #777;
-}
-
-/* Variasi warna berdasarkan tipe */
-.UserNotifItem.admin {
-  border-left: 6px solid #4C9AFF;
-}
-
-.UserNotifItem.announcement {
-  border-left: 6px solid #FFB020;
+.NotifUserOverlayBtns {
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
 }
