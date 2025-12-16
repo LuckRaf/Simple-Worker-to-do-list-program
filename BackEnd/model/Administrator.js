@@ -15,7 +15,8 @@ class Administrator {
         SELECT 
         SUM(ad.Attended) AS totalAttended,
         SUM(ad.OnReview) AS totalOnReview,
-        SUM(ad.Completed) AS totalCompleted
+        SUM(ad.Completed) AS totalCompleted,
+        SUM(ad.Unattended) AS totalUnattended
         FROM Account a
         JOIN AccountData ad ON a.id = ad.account_id
         WHERE a.workcode = ?

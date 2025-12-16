@@ -25,9 +25,10 @@ function MainAdmin() {
 
         if (res.ok) {
           setWorkData({
-            Attended: data.totalAttended || 0,
-            OnReview: data.totalOnReview || 0,
-            Completed: data.totalCompleted || 0,
+            Attended: data.data.totalAttended || 0,
+            OnReview: data.data.totalOnReview || 0,
+            Completed: data.data.totalCompleted || 0,
+            Unattended: data.data.totalUnattended || 0,
           });
         } else {
           console.error("Failed to fetch admin group data:", data.message);
@@ -61,7 +62,7 @@ function MainAdmin() {
 
           <div className="WorkCounterStatus unattended">
             <span className="CounterLabel">Unattended</span>
-            <span className="CounterNumber">{Unattended}</span>
+            <span className="CounterNumber">{workData.Unattended}</span>
           </div>
 
           <div className="WorkCounterStatus review">

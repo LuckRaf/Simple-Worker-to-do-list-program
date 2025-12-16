@@ -18,6 +18,14 @@
   padding-top: 1rem;
 }
 
+.AllTaskContainer button {
+  border-color: #43a047;
+  background-color: #5a7be0;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 /* TITLE BOX */
 .WelcomeBox-Work {
   color: black;

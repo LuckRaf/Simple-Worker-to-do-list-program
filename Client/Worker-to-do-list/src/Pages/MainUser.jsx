@@ -5,13 +5,14 @@ import pfp from "/src/assets/checkmark.png";
 import Sidebar from "../component/SideBarW.jsx";
 
 function UserHome() {
-  const { user_id } = useAuth();
-  const { username } = useAuth();
+  const { user_id, username } = useAuth();
 
   const [workData, setWorkData] = useState({
+    Unattended: 0,
     Attended: 0,
     OnReview: 0,
     Completed: 0,
+    history: [],
   });
 
   // Fetch user work data
@@ -25,9 +26,10 @@ function UserHome() {
 
         if (res.ok) {
           setWorkData({
-            Attended: data.Attended || 0,
-            OnReview: data.OnReview || 0,
-            Completed: data.Completed || 0,
+            Attended: data.tasks.attended || 99,
+            OnReview: data.tasks.on_review || 99,
+            Completed:data.tasks.completed || 99,
+            history: Array.isArray(data.history) ? data.history : [],
           });
         } else {
           console.error("Failed to fetch user data:", data.message);
@@ -40,10 +42,11 @@ function UserHome() {
     fetchUserData();
   }, [user_id]);
 
-  const Pending = Math.max(
-    0,
-    workData.Attended + workData.OnReview - workData.Completed
-  );
+  // Pending = total tasks not completed yet (unattended + attended + on review)
+  const Pending =
+    (workData.Unattended || 0) +
+    (workData.Attended || 0) +
+    (workData.OnReview || 0);
 
   return (
     <div className="UserHomeContainer">
@@ -51,13 +54,13 @@ function UserHome() {
 
       <div className="UserHomeContent">
         <div className="UserWelcomeBox">
-          Welcome, User {user_id ? `(${user_id})` : ""}
+          Welcome, {username} {user_id ? `(${user_id})` : ""}
         </div>
 
         <div className="UserWorkCounter">
           <div className="UserWorkStatus pending">
             <span className="UserCounterLabel">Pending</span>
-            <span className="UserCounterNumber">{Pending}</span>
+            <span className="UserCounterNumber">{workData.Attended}</span>
           </div>
 
           <div className="UserWorkStatus inprogress">
@@ -77,21 +80,19 @@ function UserHome() {
             <h3 className="UserBoxTitle">My Recent Tasks</h3>
 
             <div className="UserHistoryList">
-              <div className="UserHistoryRow">
-                <span className="UserHistoryIcon">📝</span>
-                <span className="UserHistoryText">
-                  You completed a task
-                </span>
-                <span className="UserHistoryTime">Recently</span>
-              </div>
-
-              <div className="UserHistoryRow">
-                <span className="UserHistoryIcon">✔️</span>
-                <span className="UserHistoryText">
-                  Progress updated
-                </span>
-                <span className="UserHistoryTime">Today</span>
-              </div>
+              {workData.history.length > 0 ? (
+                workData.history.map((item, index) => (
+                  <div key={index} className="UserHistoryRow">
+                    <span className="UserHistoryIcon">📝</span>
+                    <span className="UserHistoryText">{item.task}</span>
+                    <span className="UserHistoryTime">{item.time}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="UserHistoryRow">
+                  <span className="UserHistoryText">None</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -35,13 +35,59 @@ function TaskA() {
   }, [user_id]);
 
   // ================= HELPER =================
-  const renderDependencyTitles = dependency => {
-    if (!Array.isArray(dependency) || dependency.length === 0) return "-";
-    return dependency
-      .map(id => tasks.find(t => t.id === id)?.title)
-      .filter(Boolean)
-      .join(", ");
-  };
+// ================= PARSE DEPENDENCY STRING =================
+// ================= PARSE DEPENDENCY STRING =================
+const parseDependencyString = (depStr) => {
+  if (!depStr || typeof depStr !== "string") return [];
+
+  // hapus kutip luar jika ada
+  let cleanStr = depStr.trim();
+  if (cleanStr.startsWith('"') && cleanStr.endsWith('"')) {
+    cleanStr = cleanStr.slice(1, -1);
+  }
+
+  const result = [];
+  let current = "";
+
+  for (let i = 0; i < cleanStr.length; i++) {
+    const char = cleanStr[i];
+
+    if (char === "[" || char === "]" || char === " ") continue;
+    else if (char === ",") {
+      if (current.length > 0) {
+        result.push(Number(current));
+        current = "";
+      }
+    } else {
+      current += char;
+    }
+  }
+
+  if (current.length > 0) result.push(Number(current));
+
+  return result;
+};
+
+// ================= RENDER DEPENDENCY TITLES =================
+const renderDependencyTitles = (dependency) => {
+  if (!dependency) return "-";
+
+  // parsing string menjadi array angka
+  const depArray = parseDependencyString(dependency);
+
+  if (!Array.isArray(depArray) || depArray.length === 0) return "-";
+
+  // mapping ID ke judul task
+  return depArray
+    .map(id => tasks.find(t => t.id === id)?.title || `#${id}`)
+    .join(", ");
+};
+
+
+
+
+
+
 
   // ================= CREATE TASK =================
   const handleCreateTask = async () => {
@@ -67,21 +113,40 @@ function TaskA() {
 
   // ================= PROCEED TASK =================
   const handleProceed = async task => {
-    const res = await fetch(
-      `http://localhost:3000/task/proceed/${task.id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id })
-      }
-    );
+  let depArray = [];
+  try {
+    depArray = JSON.parse(task.dependency || "[]");
+  } catch {
+    depArray = [];
+  }
 
-    const data = await res.json();
-    if (!res.ok) return alert(data.message);
+  // cek semua dependency
+  const unmetDeps = depArray.filter(
+    id => tasks.find(t => t.id === id)?.status !== "completed"
+  );
 
-    setTasks(prev => prev.map(t => (t.id === task.id ? data : t)));
-    setSelectedTask(null);
-  };
+  if (unmetDeps.length > 0) {
+    alert("Cannot proceed. Dependency not done: " + unmetDeps.join(", "));
+    return;
+  }
+
+  // jika semua dependency completed, proceed
+  const res = await fetch(
+    `http://localhost:3000/task/proceed/${task.id}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id })
+    }
+  );
+
+  const data = await res.json();
+  if (!res.ok) return alert(data.message);
+
+  setTasks(prev => prev.map(t => (t.id === task.id ? data : t)));
+  setSelectedTask(null);
+};
+
 
   // ================= RENDER TASK =================
   const renderTasks = status => {
@@ -127,7 +192,7 @@ function TaskA() {
         <div className="KanbanModel">
           {[
             { key: "unattended", label: "UNATTENDED" },
-            { key: "in_progress", label: "IN PROGRESS" },
+            { key: "in_progress", label: "ATTENDED" },
             { key: "on_review", label: "ON REVIEW" },
             { key: "completed", label: "COMPLETED" }
           ].map(col => (

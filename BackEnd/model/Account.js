@@ -90,7 +90,52 @@ class Account {
     return rows[0].role; // mengembalikan 'user' atau 'admin'
   }
 
-  static async
+  static async getWorkData(user_id) {
+    // Ambil data user
+    const [userRows] = await db.execute(
+      `SELECT id, username, role, email, full_name AS name, department, workcode 
+       FROM Account WHERE id = ?`,
+      [user_id]
+    );
+
+    if (userRows.length === 0) throw new Error("User not found");
+
+    const user = userRows[0];
+
+    // Total tasks completed
+    const [totalRows] = await db.execute(
+      `SELECT COUNT(*) AS totalTasks FROM Task 
+       WHERE attendedby = ? AND status = 'completed'`,
+      [user_id]
+    );
+
+    const totalTasks = totalRows[0]?.totalTasks || 0;
+
+    // Recent activities (ambil 5 terbaru)
+    const [historyRows] = await db.execute(
+      `SELECT title AS task, created_at AS time 
+       FROM Task WHERE attendedby = ? 
+       ORDER BY created_at DESC LIMIT 5`,
+      [user_id]
+    );
+
+    // Format time sederhana
+    const history = historyRows.map(h => ({
+      task: h.task,
+      time: h.time ? new Date(h.time).toLocaleString() : "-"
+    }));
+
+    return {
+      id: user.id,
+      username: user.username,
+      name: user.name,
+      role: user.role,
+      email: user.email,
+      department: user.department,
+      totalTasks,
+      history
+    };
+  }
 
 }
 
