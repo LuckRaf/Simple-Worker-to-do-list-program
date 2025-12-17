@@ -10,6 +10,15 @@ function ProfileUser() {
   const { username, role, user_id } = useAuth();
   const [userData, setUserData] = useState(null);
 
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "-";
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   useEffect(() => {
     if (!user_id) return;
 
@@ -62,9 +71,9 @@ function ProfileUser() {
         {/* Nama & Data Singkat */}
         <div className="UserProfileHeader">
           <h2 className="UserName">{name}</h2>
-          <p className="UserRole">{userRole} {"empty"}</p>
+          <p className="UserRole">{userRole} </p>
           <p className="UserEmail">{email}</p>
-          <p className="UserJoinedAt">Joined at: {created_at}</p>
+          <p className="UserJoinedAt">Joined at: {formatDate(created_at)}</p>
         </div>
 
         {/* Total pekerjaan */}

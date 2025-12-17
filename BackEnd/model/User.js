@@ -22,7 +22,7 @@ class User {
     static async getUserWorkData(user_id) {
   // Ambil data user dasar
   const [userRows] = await db.execute(
-    `SELECT id, username, role, email, full_name AS name
+    `SELECT id, username, role, email, created_at, full_name AS name
      FROM Account WHERE id = ?`,
     [user_id]
   );
@@ -69,6 +69,7 @@ class User {
     role: user.role,
     email: user.email,
     tasks: taskStatus,
+    created_at: user.created_at,
     history
   };
 }

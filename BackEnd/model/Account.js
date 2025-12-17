@@ -93,7 +93,7 @@ class Account {
   static async getWorkData(user_id) {
     // Ambil data user
     const [userRows] = await db.execute(
-      `SELECT id, username, role, email, full_name AS name, department, workcode 
+      `SELECT id, username, role, email, full_name AS name, department, created_at, workcode 
        FROM Account WHERE id = ?`,
       [user_id]
     );
@@ -124,6 +124,7 @@ class Account {
       task: h.task,
       time: h.time ? new Date(h.time).toLocaleString() : "-"
     }));
+    console.log(user.created_at);
 
     return {
       id: user.id,
@@ -132,6 +133,8 @@ class Account {
       role: user.role,
       email: user.email,
       department: user.department,
+      created_at: user.created_at,
+      workcode: user.workcode,
       totalTasks,
       history
     };

@@ -80,6 +80,7 @@ const handleProceed = async (task) => {
         <div key={task.id} className="UserTaskItem" onClick={() => setSelectedTask(task)}>
           <div className="UserTaskTitle">{task.title}</div>
           <div className="UserTaskDependencies">Dependency: {renderDependencyTitles(task.dependency)}</div>
+          <div className="UserTaskDeadline">Due: {formatDate(task.Deadline)}</div>
         </div>
       ));
   };
