@@ -1,18 +1,13 @@
 const mysql = require('mysql2');
+require('dotenv').config(); // load env
 
-// Konfigurasi MySQL Lokal (phpMyAdmin)
-const config = {
-    host: 'localhost',
-    user: 'root',          // default phpMyAdmin
-    password: '',          // kosong jika default XAMPP/Laragon
-    database: 'kanban_project',
-    port: 3306,
+// Pakai DATABASE_URL
+const pool = mysql.createPool({
+    uri: process.env.DATABASE_URL,
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 5,
     queueLimit: 0
-};
-
-const pool = mysql.createPool(config);
+});
 
 // Test connection
 pool.getConnection((err, connection) => {
@@ -20,6 +15,7 @@ pool.getConnection((err, connection) => {
         console.error('Database connection error:', err);
         return;
     }
+    console.log('Connected to Railway MySQL ✅');
     connection.release();
 });
 

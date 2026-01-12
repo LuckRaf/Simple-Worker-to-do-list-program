@@ -38,7 +38,7 @@ class User {
        SUM(Attended) AS attended,
        SUM(OnReview) AS on_review,
        SUM(Completed) AS completed
-     FROM accountdata
+     FROM AccountData
      WHERE account_id = ?`,
     [user_id]
   );

@@ -5,7 +5,7 @@ import pfp from "/src/assets/checkmark.png";
 import "./TaskListA.css";
 
 function TaskA() {
-  const { user_id } = useAuth();
+  const { user_id , username} = useAuth();
 
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
@@ -182,7 +182,7 @@ const renderDependencyTitles = (dependency) => {
 
   return (
     <div className="TaskContainer">
-      <Sidebar profilePic={pfp} username="Admin" />
+      <Sidebar profilePic={pfp} username={username} />
 
       <div className="AllTaskContainer">
         <div className="WelcomeBox-Work">Work Status</div>

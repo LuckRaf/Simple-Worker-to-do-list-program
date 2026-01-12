@@ -2,11 +2,13 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './SideBarA.css';
 import check from '/src/assets/checkmark.png';
+import { useAuth } from '../context/AuthContext';
 
 
 function SideBarA({ profilePic, username }) {
     const navigate = useNavigate();
     const location = useLocation();
+    const {logout} = useAuth();
     const menuItems = [ 
     { path: '/mainAdmin', icon: check, label: 'Home' },
     { path: '/taskListA', icon: check, label: 'Task List' },
@@ -36,15 +38,23 @@ function SideBarA({ profilePic, username }) {
         <nav className="sidebar-nav">
         <p><b>MAIN MENU</b></p>
         {menuItems.map((item) => (
-          <button
-            key={item.path}
-            className={`sidebar-item ${isActive(item.path) ? 'active' : ''}`}
-            onClick={() => navigate(item.path)}
-          >
-            <img src={item.icon} alt={item.label} className="sidebar-icon" />
-            {item.label}
-          </button>
-        ))}
+        <button
+          key={item.path}
+          className={`sidebar-item ${isActive(item.path) ? 'active' : ''}`}
+          onClick={() => {
+            if (item.path === '/logout') {
+              logout();           // clear auth context
+              navigate('/login'); // redirect ke login
+            } else {
+              navigate(item.path); // navigasi biasa
+            }
+          }}
+        >
+          <img src={item.icon} alt={item.label} className="sidebar-icon" />
+          {item.label}
+        </button>
+      ))}
+
         
 
         

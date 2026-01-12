@@ -178,14 +178,16 @@ static async proceedTask(task_id, admin_id) {
     const [rows] = await db.execute(
       `SELECT t.*, a.username AS attended_username
        FROM Task t
-       LEFT JOIN Account a ON t.attendedby = a.id
-       WHERE t.attendedby = ? OR t.status = 'unattended'
+       LEFT JOIN Account a 
+         ON t.attendedby = a.id 
+         AND t.workcode = a.workcode
+       WHERE t.user_id = ?
        ORDER BY t.id DESC`,
       [user_id]
     );
 
     return rows;
-  }
+}
 
   // Proceed task (worker hanya boleh UNATTENDED → ATTENDED)
 static async proceedTaskWorker(task_id, user_id) {
@@ -196,7 +198,7 @@ static async proceedTaskWorker(task_id, user_id) {
     if (rows.length === 0) throw new Error("Task not found");
     const task = rows[0];
 
-    if (task.status !== "unattended")
+    if (task.status == "on_review" || task.status == "completed")
         throw new Error("Cannot proceed this task yet (Only UNATTENDED → IN_PROGRESS allowed)");
 
     // ================= CEK DEPENDENCY =================
@@ -224,9 +226,18 @@ static async proceedTaskWorker(task_id, user_id) {
     const adminId = adminRows[0]?.id;
 
     // ================= UPDATE TASK =================
-    await db.execute(
-        "UPDATE Task SET status = 'in_progress', attendedby = ? WHERE id = ?",
-        [user_id, task_id]
+    if (task.status == "unattended") {
+      await db.execute(
+          "UPDATE Task SET status = 'in_progress', attendedby = ? WHERE id = ?",
+          [user_id, task_id]
+          
+    );
+    console.log("masuk in progress");
+    }
+    else if (task.status == "in_progress")
+      await db.execute(
+          "UPDATE Task SET status = 'on_review', attendedby = ? WHERE id = ?",
+          [user_id, task_id]
     );
 
     // ================= UPDATE ACCOUNTDATA =================

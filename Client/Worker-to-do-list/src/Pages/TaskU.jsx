@@ -5,7 +5,7 @@ import pfp from '/src/assets/checkmark.png';
 import './TaskU.css';
 
 function TaskUser() {
-  const { user_id } = useAuth();
+  const { user_id, username } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -21,48 +21,51 @@ function TaskUser() {
 
   // ================= HELPER =================
   const renderDependencyTitles = (dep) => {
-  if (!dep) return "-"; // null atau undefined
-  try {
-    const arr = JSON.parse(dep);
-    if (!arr || arr.length === 0) return "-"; // kosong
-    return arr.map(id => tasks.find(t => t.id === id)?.title || `#${id}`).join(", ");
-  } catch {
-    return "-"; // jika parsing gagal
-  }
-};
-
-
-const handleProceed = async (task) => {
-  // hanya boleh proceed jika status bukan COMPLETED
-  if (task.status === "completed") {
-    return alert("Cannot proceed this task (Already completed)");
-  }
-
-  // cek dependency (hanya untuk UNATTENDED)
-  if (task.status === "unattended") {
-    const depIds = task.dependency ? JSON.parse(task.dependency) : [];
-    const depNotDone = depIds.some(id => tasks.find(t => t.id === id)?.status !== "completed");
-    if (depNotDone) {
-      return alert("Dependency not done");
+    if (!dep) return "-"; // null atau undefined
+    try {
+      const arr = JSON.parse(dep);
+      if (!arr || arr.length === 0) return "-"; // kosong
+      return arr.map(id => tasks.find(t => t.id === id)?.title || `#${id}`).join(", ");
+    } catch {
+      return "-"; // jika parsing gagal
     }
-  }
+  };
 
-  try {
-    const res = await fetch(`http://localhost:3000/task/proceed-worker/${task.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id })
-    });
-    const data = await res.json();
-    if (!res.ok) return alert(data.message || "Failed to proceed task");
+  const handleProceed = async (task) => {
+    // hanya boleh proceed jika status bukan COMPLETED
+    if (task.status === "completed") {
+      return alert("Cannot proceed this task (Already completed)");
+    }
 
-    setTasks(prev => prev.map(t => (t.id === task.id ? data : t)));
-    setSelectedTask(null);
-  } catch (err) {
-    alert("Error connecting to server");
-  }
-};
+    // VALIDASI: cek apakah task di-attend oleh current user
+    // Untuk unattended: attendedby masih NULL, jadi boleh proceed
+    // Untuk in_progress: attendedby harus sama dengan user_id
+    
 
+    // cek dependency (hanya untuk UNATTENDED)
+    if (task.status === "unattended") {
+      const depIds = task.dependency ? JSON.parse(task.dependency) : [];
+      const depNotDone = depIds.some(id => tasks.find(t => t.id === id)?.status !== "completed");
+      if (depNotDone) {
+        return alert("Dependency not done");
+      }
+    }
+
+    try {
+      const res = await fetch(`http://localhost:3000/task/proceed-worker/${task.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id })
+      });
+      const data = await res.json();
+      if (!res.ok) return alert(data.message || "Failed to proceed task");
+
+      setTasks(prev => prev.map(t => (t.id === task.id ? data : t)));
+      setSelectedTask(null);
+    } catch (err) {
+      alert("Error connecting to server");
+    }
+  };
 
   // ================= RENDER TASK =================
   const renderTasks = (status) => {
@@ -96,7 +99,7 @@ const handleProceed = async (task) => {
 
   return (
     <div className="UserTaskContainer">
-      <Sidebar profilePic={pfp} username={"User"} />
+      <Sidebar profilePic={pfp} username={username} />
 
       <div className="UserAllTaskContainer"> 
         <div className="UserWelcomeBox-Work">Work</div>
@@ -123,7 +126,7 @@ const handleProceed = async (task) => {
               <li>Due date: {formatDate(selectedTask.Deadline)}</li>
               <li>Status: {selectedTask.status}</li>
             </ul>
-            {(selectedTask.status === "unattended" || selectedTask.status === "in_progress") && (
+            {(selectedTask.status === "unattended" || (selectedTask.status === "in_progress" && selectedTask.attendedby == user_id)) && (
               <button onClick={() => handleProceed(selectedTask)}>Proceed</button>
             )}
 

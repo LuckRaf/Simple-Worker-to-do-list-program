@@ -6,7 +6,7 @@ import SidebarU from "../component/SideBarW.jsx";
 import { useAuth } from "../context/AuthContext";
 
 function Productivity() {
-  const { user_id, account_type } = useAuth();
+  const { user_id, account_type , username} = useAuth();
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
@@ -31,9 +31,9 @@ function Productivity() {
   return (
     <div className="GroupContainer">
       {account_type === "admin" ? (
-        <SidebarA profilePic={pfp} username="Admin" />
+        <SidebarA profilePic={pfp} username={username} />
       ) : (
-        <SidebarU profilePic={pfp} username="User" />
+        <SidebarU profilePic={pfp} username={username} />
       )}
 
       <div className="GroupContent">
