@@ -1,8 +1,10 @@
 {
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "/Client/Worker-To-Do-List/dist/index.html"
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     }
   ]
 }
+
+
