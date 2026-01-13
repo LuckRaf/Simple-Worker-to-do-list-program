@@ -3,14 +3,6 @@ const db = require('../config/database')
 class Account {
   
   static async initAccountTable() {
-    await db.execute(`SET FOREIGN_KEY_CHECKS = 0`);
-
-    // Drop tables
-    await db.execute(`DROP TABLE IF EXISTS AccountData`);
-    await db.execute(`DROP TABLE IF EXISTS Account`);
-
-    // Enable foreign key checks again
-    await db.execute(`SET FOREIGN_KEY_CHECKS = 1`);
     const sql = `
       CREATE TABLE IF NOT EXISTS Account (
         id INT AUTO_INCREMENT PRIMARY KEY,
