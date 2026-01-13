@@ -68,6 +68,9 @@ const handleRegister = async () => {
       return
     }
 
+    // 🔍 DEBUG: tampilkan API_URL & full endpoint
+    alert(`DEBUG REGISTER\nAPI_URL = ${API_URL}\nEndpoint = ${API_URL}/register`)
+
     const res = await fetch(`${API_URL}/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -102,6 +105,7 @@ const handleRegister = async () => {
     alert(`Server error: ${error.message}`)
   }
 }
+
 
 
   return (
