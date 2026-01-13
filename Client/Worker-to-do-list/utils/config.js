@@ -1,1 +1,1 @@
-API_URL = "https://simple-worker-to-do-list-program.vercel.app"
+export const API_URL = "https://simple-worker-to-do-list-program.vercel.app"
