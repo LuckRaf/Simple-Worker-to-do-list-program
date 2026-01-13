@@ -34,75 +34,35 @@ app.get('/', (req, res) => {
 // REGISTER
 app.post('/api/register', async (req, res) => {
   try {
-    // ================= VALIDASI BODY =================
-    if (!req.body || Object.keys(req.body).length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Request body is empty"
-      });
+    if (!req.body) {
+      return res.status(400).json({ success: false, message: "Empty body" })
     }
 
-    const {
-      username,
-      password,
-      email,
-      full_name,
-      phone_number,
-      role,
-      workcode
-    } = req.body;
+    await Account.AccountRegister(
+      req.body.username,
+      req.body.password,
+      req.body.email,
+      req.body.full_name,
+      req.body.phone_number,
+      req.body.role,
+      req.body.workcode
+    )
 
-    // ================= VALIDASI FIELD =================
-    if (!username || !password || !email || !full_name) {
-      return res.status(400).json({
-        success: false,
-        message: "Required fields are missing"
-      });
-    }
-
-    if (role === "user" && !workcode) {
-      return res.status(400).json({
-        success: false,
-        message: "Work code is required for user role"
-      });
-    }
-
-    // ================= PROSES REGISTER =================
-    const result = await Account.AccountRegister(
-      username,
-      password,
-      email,
-      full_name,
-      phone_number || null,
-      role || "user",
-      workcode || null
-    );
-
-    // ================= RESPONSE PASTI JSON =================
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: "Register success",
-      data: result || null
-    });
+      message: "Register success"
+    })
 
   } catch (err) {
-    console.error("REGISTER ERROR:", err);
+    console.error("REGISTER FAILED:", err)
 
-    // ================= ERROR KHUSUS MYSQL =================
-    if (err.code === "ER_DUP_ENTRY") {
-      return res.status(409).json({
-        success: false,
-        message: "Username or email already exists"
-      });
-    }
-
-    // ================= FALLBACK ERROR =================
+    // ⛑️ PAKSA JSON RESPONSE
     return res.status(500).json({
       success: false,
-      message: err.message || "Internal server error"
-    });
+      message: err?.message || "Register failed"
+    })
   }
-});
+})
 
 // LOGIN
 app.post('/api/login', async (req, res) => {
