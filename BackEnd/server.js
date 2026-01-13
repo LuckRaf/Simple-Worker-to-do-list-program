@@ -34,6 +34,14 @@ app.get('/', (req, res) => {
 // REGISTER
 app.post('/api/register', async (req, res) => {
   try {
+    // ================= VALIDASI BODY =================
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Request body is empty"
+      });
+    }
+
     const {
       username,
       password,
@@ -44,22 +52,54 @@ app.post('/api/register', async (req, res) => {
       workcode
     } = req.body;
 
-    await Account.AccountRegister(
+    // ================= VALIDASI FIELD =================
+    if (!username || !password || !email || !full_name) {
+      return res.status(400).json({
+        success: false,
+        message: "Required fields are missing"
+      });
+    }
+
+    if (role === "user" && !workcode) {
+      return res.status(400).json({
+        success: false,
+        message: "Work code is required for user role"
+      });
+    }
+
+    // ================= PROSES REGISTER =================
+    const result = await Account.AccountRegister(
       username,
       password,
       email,
       full_name,
-      phone_number,
-      role,
-      workcode
+      phone_number || null,
+      role || "user",
+      workcode || null
     );
 
-    res.json({ success: true, message: 'Register success' });
+    // ================= RESPONSE PASTI JSON =================
+    return res.status(201).json({
+      success: true,
+      message: "Register success",
+      data: result || null
+    });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({
+    console.error("REGISTER ERROR:", err);
+
+    // ================= ERROR KHUSUS MYSQL =================
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.status(409).json({
+        success: false,
+        message: "Username or email already exists"
+      });
+    }
+
+    // ================= FALLBACK ERROR =================
+    return res.status(500).json({
       success: false,
-      message: err.message || 'Register failed'
+      message: err.message || "Internal server error"
     });
   }
 });
