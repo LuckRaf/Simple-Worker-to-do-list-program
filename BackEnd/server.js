@@ -25,24 +25,55 @@ app.get('/', (req, res) => {
 });
 
 // ======= ACCOUNT =======
-// Register
-app.post('/register', async (req, res) => {
+// ======= ACCOUNT AUTH =======
+
+// REGISTER
+app.post('/api/register', async (req, res) => {
   try {
-    const { username, password, email, full_name, phone_number, role, workcode } = req.body;
-    await Account.AccountRegister(username, password, email, full_name, phone_number, role, workcode);
-    res.json({ message: 'Register success' });
+    const {
+      username,
+      password,
+      email,
+      full_name,
+      phone_number,
+      role,
+      workcode
+    } = req.body;
+
+    await Account.AccountRegister(
+      username,
+      password,
+      email,
+      full_name,
+      phone_number,
+      role,
+      workcode
+    );
+
+    res.json({ success: true, message: 'Register success' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: err.message || 'Register failed' });
+    res.status(500).json({
+      success: false,
+      message: err.message || 'Register failed'
+    });
   }
 });
 
-// Login
-app.post('/login', async (req, res) => {
+
+// LOGIN
+app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+
     const user = await Account.login(username, password);
-    if (!user) return res.status(401).json({ success: false, message: "Invalid credentials" });
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials"
+      });
+    }
 
     res.json({
       success: true,
@@ -52,9 +83,14 @@ app.post('/login', async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "Server error" });
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 });
+
+
 
 // ======= ADMIN ROUTES =======
 // Get admin group data

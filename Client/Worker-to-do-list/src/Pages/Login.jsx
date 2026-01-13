@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from "../context/AuthContext"
 import './Login.css'
 
+const API_URL = import.meta.env.VITE_API_URL
+
 function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-
   const [showRegister, setShowRegister] = useState(false)
+
   const [regData, setRegData] = useState({
     username: "",
     password: "",
@@ -23,31 +25,28 @@ function Login() {
 
   // ========== LOGIN ==========
   const handleLogin = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
+    try {
+      const res = await fetch(`${API_URL}/api/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      })
 
-    const data = await res.json();
+      const data = await res.json()
 
-    if (res.ok && data.success) {
-      // ✅ Simpan role & user_id di AuthContext
-      login(data.role, data.id, data.username);
+      if (res.ok && data.success) {
+        login(data.role, data.id, data.username)
 
-      // Redirect sesuai role
-      if (data.role === "admin") navigate("/MainAdmin");
-      else navigate("/MainUser");
-    } else {
-      alert(data.message || "Login failed");
+        if (data.role === "admin") navigate("/MainAdmin")
+        else navigate("/MainUser")
+      } else {
+        alert(data.message || "Login failed")
+      }
+    } catch (err) {
+      console.error(err)
+      alert("Server error")
     }
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
   }
-};
-
 
   // ========== REGISTER ==========
   const generateRandomCode = (length = 10) => {
@@ -60,19 +59,17 @@ function Login() {
   }
 
   const handleGenerateCode = () => {
-    const code = generateRandomCode()
-    setRegData({ ...regData, workcode: code })
+    setRegData({ ...regData, workcode: generateRandomCode() })
   }
 
   const handleRegister = async () => {
     try {
-      // Jika user, workcode wajib
       if (regData.role === "user" && !regData.workcode) {
         alert("Please enter work code provided by your administrator")
         return
       }
 
-      const res = await fetch("http://localhost:3000/register", {
+      const res = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(regData)
@@ -80,7 +77,7 @@ function Login() {
 
       const data = await res.json()
 
-      if (!res.ok) {
+      if (!res.ok || !data.success) {
         alert(data.message || "Register failed")
         return
       }
@@ -97,8 +94,8 @@ function Login() {
         workcode: ""
       })
     } catch (error) {
-      alert("Server error")
       console.error(error)
+      alert("Server error")
     }
   }
 
@@ -115,7 +112,6 @@ function Login() {
         {!showRegister && (
           <>
             <input
-              type="text"
               placeholder="Username"
               value={username}
               onChange={e => setUsername(e.target.value)}
@@ -147,7 +143,6 @@ function Login() {
 
         {showRegister && (
           <div className="Register-overlay">
-
             <input
               placeholder="Username"
               value={regData.username}
@@ -187,14 +182,16 @@ function Login() {
 
             <select
               value={regData.role}
-              onChange={e => setRegData({ ...regData, role: e.target.value, workcode: "" })}
+              onChange={e =>
+                setRegData({ ...regData, role: e.target.value, workcode: "" })
+              }
             >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
             <br />
 
-            <div className='Workcode'>
+            <div className="Workcode">
               {regData.role === "user" ? (
                 <input
                   placeholder="Work Code from Admin"
@@ -209,12 +206,13 @@ function Login() {
                     readOnly
                   />
                   <br />
-                  <button type="button" onClick={handleGenerateCode}>
+                  <button onClick={handleGenerateCode}>
                     Generate
                   </button>
                 </>
               )}
             </div>
+
             <br />
 
             <div className="Login-actions">
@@ -229,10 +227,8 @@ function Login() {
                 Back to Login
               </button>
             </div>
-
           </div>
         )}
-
       </div>
     </div>
   )
