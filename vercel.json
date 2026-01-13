@@ -4,13 +4,12 @@
       "src": "Client/Worker-to-do-list/package.json",
       "use": "@vercel/static-build",
       "config": { "distDir": "dist" }
-    },
-    {
-      "src": "BackEnd/server.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "Client/Worker-to-do-list/dist/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "/Client/Worker-to-do-list/dist/index.html"
+    }
   ]
 }
