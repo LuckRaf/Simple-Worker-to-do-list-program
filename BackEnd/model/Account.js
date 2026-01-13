@@ -32,25 +32,56 @@ class Account {
     console.log('Account table initialized')
   }
 
-  static async AccountRegister(username, password, email, full_name, phone_number, role, workcode) {
-    const sql = `
-      INSERT INTO Account
-      (username, password, email, full_name, phone_number, role, workcode)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `
+  static async AccountRegister(
+    username,
+    password,
+    email,
+    full_name,
+    phone_number,
+    role,
+    workcode
+  ) {
+    try {
+      const sql = `
+        INSERT INTO Account
+        (username, password, email, full_name, phone_number, role, workcode)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `
 
-    const [result] = await db.execute(sql, [
-      username, password, email, full_name, phone_number, role, workcode
-    ])
+      const [result] = await db.execute(sql, [
+        username,
+        password,
+        email,
+        full_name,
+        phone_number,
+        role,
+        workcode
+      ])
 
-    const sql2 = ` 
-      INSERT INTO AccountData
-      (account_id, Attended, OnReview, Completed)
-      VALUES (LAST_INSERT_ID(), 0, 0, 0)
-    `
-    await db.execute(sql2)
-    return result
+      const accountId = result.insertId
+      if (!accountId) {
+        throw new Error("Failed to get inserted account ID")
+      }
+
+      const sql2 = `
+        INSERT INTO AccountData
+        (account_id, Attended, OnReview, Completed)
+        VALUES (?, 0, 0, 0)
+      `
+
+      await db.execute(sql2, [accountId])
+
+      return {
+        success: true,
+        account_id: accountId
+      }
+
+    } catch (err) {
+      console.error("❌ AccountRegister ERROR:", err)
+      throw err
+    }
   }
+
 
   static async login(username, password) {
     const sql = `SELECT * FROM Account WHERE username = ? AND password = ?`;
