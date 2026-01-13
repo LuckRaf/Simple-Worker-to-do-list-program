@@ -33,10 +33,12 @@ app.get('/', (req, res) => {
 
 // REGISTER
 app.post('/api/register', async (req, res) => {
+  console.log("🔥 REGISTER HIT", req.body);
   try {
     if (!req.body) {
       return res.status(400).json({ success: false, message: "Empty body" })
     }
+
 
     await Account.AccountRegister(
       req.body.username,
