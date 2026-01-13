@@ -1,1 +1,1 @@
-export const API_URL = "/api";
+export const API_URL = "https://simple-worker-to-do-list-program-knyocpamk-luckrafs-projects.vercel.app";
