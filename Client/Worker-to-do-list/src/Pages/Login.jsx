@@ -77,11 +77,23 @@ const handleRegister = async () => {
       body: JSON.stringify(regData)
     })
 
-    let data
+    let rawText
+
     try {
-      alert("DEBUG: Attempting to parse JSON response")
-      data = await res.json()
-    } catch {
+      rawText = await res.text()
+
+      alert(
+        "DEBUG RESPONSE\n\n" +
+        "Status: " + res.status + "\n\n" +
+        "Raw response:\n" +
+        rawText
+      )
+
+      // coba parse manual
+      data = JSON.parse(rawText)
+
+    } catch (err) {
+      console.error("JSON PARSE ERROR:", err, rawText)
       throw new Error("Invalid JSON response from server")
     }
 
