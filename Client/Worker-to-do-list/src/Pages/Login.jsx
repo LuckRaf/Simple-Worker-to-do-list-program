@@ -79,6 +79,7 @@ const handleRegister = async () => {
 
     let data
     try {
+      alert("DEBUG: Attempting to parse JSON response")
       data = await res.json()
     } catch {
       throw new Error("Invalid JSON response from server")
