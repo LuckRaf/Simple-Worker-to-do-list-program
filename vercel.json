@@ -1,8 +1,15 @@
 {
+  "builds": [
+    {
+      "src": "Client/Worker-to-do-list/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/Client/Worker-To-Do-List/dist/index.html"
+      "dest": "/Client/Worker-to-do-list/dist/index.html"
     }
   ]
 }
