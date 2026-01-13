@@ -71,7 +71,7 @@ const handleRegister = async () => {
     // 🔍 DEBUG: tampilkan API_URL & full endpoint
     alert(`DEBUG REGISTER\nAPI_URL = ${API_URL}\nEndpoint = ${API_URL}/register`)
 
-    const res = await fetch(`${API_URL}/register`, {
+    const res = await fetch(`${API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(regData)
