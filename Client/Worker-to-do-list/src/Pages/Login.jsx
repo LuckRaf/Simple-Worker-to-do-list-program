@@ -61,42 +61,48 @@ function Login() {
     setRegData({ ...regData, workcode: generateRandomCode() })
   }
 
-  const handleRegister = async () => {
-    try {
-      if (regData.role === "user" && !regData.workcode) {
-        alert("Please enter work code provided by your administrator")
-        return
-      }
-
-      const res = await fetch(`${API_URL}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(regData)
-      })
-
-      const data = await res.json()
-
-      if (!res.ok || !data.success) {
-        alert(data.message || "Register failed")
-        return
-      }
-
-      alert("Register success!")
-      setShowRegister(false)
-      setRegData({
-        username: "",
-        password: "",
-        email: "",
-        full_name: "",
-        phone_number: "",
-        role: "user",
-        workcode: ""
-      })
-    } catch (error) {
-      console.error(error)
-      alert("Server error")
+const handleRegister = async () => {
+  try {
+    if (regData.role === "user" && !regData.workcode) {
+      alert("Register failed: Work code is required for user role")
+      return
     }
+
+    const res = await fetch(`${API_URL}/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(regData)
+    })
+
+    let data
+    try {
+      data = await res.json()
+    } catch {
+      throw new Error("Invalid JSON response from server")
+    }
+
+    if (!res.ok || !data.success) {
+      alert(`Register failed: ${data?.message || res.statusText}`)
+      return
+    }
+
+    alert("Register success!")
+    setShowRegister(false)
+    setRegData({
+      username: "",
+      password: "",
+      email: "",
+      full_name: "",
+      phone_number: "",
+      role: "user",
+      workcode: ""
+    })
+  } catch (error) {
+    console.error("REGISTER ERROR:", error)
+    alert(`Server error: ${error.message}`)
   }
+}
+
 
   return (
     <div className="MainFrame">
