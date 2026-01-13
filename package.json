@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-  "install-frontend": "npm install --prefix Client/worker-to-do-list",
-  "build-frontend": "npm run build --prefix Client/worker-to-do-list",
+  "install-frontend": "npm install --prefix Client/Worker-To-Do-List",
+  "build-frontend": "npm run build --prefix Client/Worker-To-Do-List",
   "build": "npm run install-frontend && npm run build-frontend",
-  "start": "node BackEnd/server.js"   
+  "start": "node BackEnd/server.js"
 }
+
 ,
   "keywords": [],
   "author": "",
