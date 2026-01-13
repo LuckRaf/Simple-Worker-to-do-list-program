@@ -1,14 +1,9 @@
 // api/index.js
-const express = require('express');
+// Vercel Serverless Entry Point
+// DO NOT wrap Express again
+
 const serverApp = require('../BackEnd/server');
 
-const app = express();
-
-console.log('🚀 Vercel API handler initialized');
-
-app.use((req, res, next) => {
-  console.log(`[API] ${req.method} ${req.url}`);
-  return serverApp(req, res, next);
-});
-
-module.exports = app;
+module.exports = (req, res) => {
+  return serverApp(req, res);
+};
